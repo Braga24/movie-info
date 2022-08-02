@@ -1,11 +1,13 @@
 import * as React from 'react';
-import './App.css';
+import Header from "./components/Header";
+import Movies from "./components/Movies";
 
 function App() {
   return (
-    <main>
-      React⚛️ + Vite⚡ + Replit🌀
-    </main>
+    <div >
+      <Header/>
+      <Movies />
+    </div>
   );
 }
 
