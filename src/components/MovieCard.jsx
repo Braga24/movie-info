@@ -16,7 +16,7 @@ let MovieCard = ({
     <div >
       <div className="mx-5 my-10 rounded-xl">
         <img
-          className="w-40 h-auto inline-block rounded-xl"
+          className="w-24 md:w-36 h-auto  rounded-xl"
           src={"https://image.tmdb.org/t/p/w500" + poster_path}
         />
       </div>
