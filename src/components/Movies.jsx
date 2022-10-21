@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import useFetch from "./hook/useFetch";
+import Pagination from "./pagination";
 import MovieCard from "./MovieCard";
 import { MyContext } from '../Context.jsx';
 /*
@@ -10,14 +11,27 @@ import { MyContext } from '../Context.jsx';
   release_date
 }*/
 
-const Movies = () => {
+const Movies = ({ type, sign }) => {
 
-  const { searchValue } = useContext(MyContext);
-  console.log(searchValue);
+  const { searchValue, search } = useContext(MyContext);
+
+  let [pageNum, setPageNum] = useState(1);
   let [mov, setMov] = useState([]);
 
-  const api = [`https://api.themoviedb.org/3/movie/popular?&api_key=22e6031b10bd74f693a72ef7ef3cc9ee&language=en-US&page=1`,
-    `https://api.themoviedb.org/3/search/movie?api_key=22e6031b10bd74f693a72ef7ef3cc9ee&query=${searchValue}`];
+  const pageChange = (value) => {
+
+    if (value === "<<") {
+      setPageNum((prev) => prev - 1);
+    } else if (value === ">>") {
+      setPageNum((prev) => prev + 1);
+    }
+    else {
+      setPageNum(Number(value));
+    }
+  }
+
+  const api = [`https://api.themoviedb.org/3/movie/${type}?&api_key=22e6031b10bd74f693a72ef7ef3cc9ee&language=en-US&page=${pageNum}`,
+  `https://api.themoviedb.org/3/search/movie?api_key=22e6031b10bd74f693a72ef7ef3cc9ee&query=${searchValue}`];
 
   useEffect(() => {
     const apiCall = (api) => {
@@ -33,22 +47,26 @@ const Movies = () => {
     }
     searchValue === '' ? apiCall(api[0]) : apiCall(api[1]);
 
-  }, [searchValue]);
+  }, [searchValue, pageNum]);
 
-
-  console.log(mov);
 
   return (
-    <>
-      {mov ?
-        <div className="flex flex-wrap justify-center">
-          {mov.map(mo => (
-            <MovieCard key={mo.id} {...mo} />
-          ))}
-        </div>
-        : <p>"Please wait"</p>
+
+    <div className="max-w-3xl mx-auto">
+
+      {mov.length !== 0 ?
+        <>
+          <div className="flex flex-wrap justify-center">
+            {mov.map(mo => (
+              <MovieCard key={mo.id} {...mo} sign={sign} />
+            ))}
+          </div>
+          <Pagination pageChange={pageChange} />
+        </>
+        : <p className="text-xl text-amber-600">Please wait!</p>
       }
-    </>
+
+    </div>
   );
 };
 export default Movies;

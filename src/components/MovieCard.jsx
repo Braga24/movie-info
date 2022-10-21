@@ -1,6 +1,5 @@
 import React from "react";
-// import {Link} from 'react-router-dom';
-// import {useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 let MovieCard = ({
   title,
@@ -8,12 +7,14 @@ let MovieCard = ({
   poster_path,
   overview,
   backdrop_path,
-  release_date
+  release_date,
+  sign
 }) => {
-  // const navigate = useNavigate();
+   const navigate = useNavigate();
+  
   return (
     
-    <div >
+    <div onClick={()=>navigate(sign ? `/${sign}/${id}` : `${id}`)}>
       <div className="mx-5 my-10 rounded-xl">
         <img
           className="w-24 md:w-36 h-auto  rounded-xl"

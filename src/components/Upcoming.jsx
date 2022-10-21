@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect  } from "react";
+import Movie from "./Movies.jsx";
 
 const Upcoming=()=>{
-  return <p>Hello Route</p>;
+  return(
+       <Movie type={"upcoming"} sign={"upcoming"}/>
+  );
 }
+
 export default Upcoming;
